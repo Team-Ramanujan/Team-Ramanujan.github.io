@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0B0D14;
+      --surface:     #131923;
+      --surface-2:   #1A2333;
+      --border:      #1E2D42;
+      --border-2:    #263545;
+      --accent:      #4B9EFF;
+      --accent-dim:  rgba(75,158,255,0.10);
+      --green:       #22D97A;
+      --green-dim:   rgba(34,217,122,0.10);
+      --orange:      #FF7043;
+      --orange-dim:  rgba(255,112,67,0.10);
+      --red:         #FF4455;
+      --red-dim:     rgba(255,68,85,0.09);
+      --purple:      #A78BFA;
+      --purple-dim:  rgba(167,139,250,0.10);
+      --text:        #D6E4F0;
+      --text-2:      #8BA8C4;
+      --text-3:      #4E657C;
+      --mono:        'JetBrains Mono', monospace;
+      --sans:        'Inter', sans-serif;
+      --display:     'Space Grotesk', sans-serif;
+      --r:           8px;
+      --r-sm:        4px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 252px;
+      flex-shrink: 0;
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.75rem 0 2rem;
+      z-index: 100;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 10px; }
+
+    .sidebar-logo {
+      padding: 0 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .logo-mark {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+    }
+    .logo-sub {
+      font-size: 10.5px;
+      color: var(--text-3);
+      letter-spacing: 0.04em;
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+    .sidebar-version {
+      display: inline-block;
+      margin-top: 8px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-size: 10.5px;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-family: var(--mono);
+      border: 1px solid rgba(75,158,255,0.18);
+    }
+    .nav-section { margin-bottom: 1.5rem; padding: 0 1.25rem; }
+    .nav-section-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      padding-left: 8px;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 10px;
+      border-radius: var(--r-sm);
+      color: var(--text-2);
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 1px;
+      transition: all 0.13s;
+    }
+    .nav-link:hover { color: var(--text); background: var(--surface-2); }
+    .nav-link.active { color: var(--accent); background: var(--accent-dim); }
+    .nav-badge {
+      font-size: 10px;
+      background: var(--surface-2);
+      color: var(--text-3);
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-family: var(--mono);
+    }
+
+    /* ── Main ── */
+    .main {
+      margin-left: 252px;
+      flex: 1;
+      max-width: 880px;
+      padding: 3rem 3.5rem 5rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 2.5rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -100px; bottom: -40px; left: -40px;
+      background: radial-gradient(ellipse at 20% 60%, rgba(75,158,255,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 1.1rem;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-family: var(--mono);
+      border: 1px solid transparent;
+    }
+    .chip .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .chip.esp  { background: var(--green-dim);  color: var(--green);  border-color: rgba(34,217,122,0.2); }
+    .chip.ai   { background: var(--accent-dim); color: var(--accent); border-color: rgba(75,158,255,0.2); }
+    .chip.cam  { background: var(--purple-dim); color: var(--purple); border-color: rgba(167,139,250,0.2); }
+    .chip.nlp  { background: var(--orange-dim); color: var(--orange); border-color: rgba(255,112,67,0.2); }
+
+    h1 {
+      font-family: var(--display);
+      font-size: 36px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.022em;
+      line-height: 1.2;
+      margin-bottom: 0.9rem;
+    }
+    h1 span { color: var(--accent); }
+    .hero p {
+      font-size: 15.5px;
+      color: var(--text-2);
+      max-width: 600px;
+      line-height: 1.75;
+      margin-bottom: 1.6rem;
+    }
+    .hero-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: var(--r);
+      font-size: 13.5px;
+      font-weight: 500;
+      font-family: var(--sans);
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.14s;
+    }
+    .btn-primary { background: var(--accent); color: #05080F; }
+    .btn-primary:hover { background: #70B8FF; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border-2); color: var(--text-2); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Sections ── */
+    section { margin-bottom: 3.5rem; scroll-margin-top: 1.5rem; }
+    .eyebrow {
+      font-size: 10.5px;
+      font-family: var(--mono);
+      color: var(--text-3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    h2 {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+    h3 {
+      font-family: var(--display);
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--text);
+      margin: 1.6rem 0 0.5rem;
+    }
+    p { color: var(--text-2); margin-bottom: 1rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin: 1.25rem 0;
+    }
+    .feat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.1rem 1.2rem;
+    }
+    .feat-card .f-icon {
+      width: 34px; height: 34px;
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px;
+      margin-bottom: 0.7rem;
+    }
+    .feat-card h4 {
+      font-family: var(--display);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .feat-card p { font-size: 12.5px; color: var(--text-3); margin: 0; }
+
+    /* ── Mode blocks ── */
+    .mode-block {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 1.1rem;
+    }
+    .mode-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.85rem 1.2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .mode-tag {
+      font-size: 10.5px;
+      font-family: var(--mono);
+      padding: 2px 8px;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--border-2);
+      color: var(--text-3);
+    }
+    .mode-title {
+      font-family: var(--display);
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .mode-body {
+      padding: 1.1rem 1.2rem;
+      background: var(--bg);
+    }
+    .mode-body p { font-size: 13.5px; margin-bottom: 0.7rem; }
+    .mode-body ul { list-style: none; padding: 0; }
+    .mode-body li {
+      font-size: 13.5px;
+      color: var(--text-2);
+      padding: 3.5px 0 3.5px 16px;
+      position: relative;
+    }
+    .mode-body li::before { content: '–'; position: absolute; left: 0; color: var(--text-3); }
+    .mode-body ol { padding-left: 1.2rem; color: var(--text-2); font-size: 13.5px; line-height: 2.1; }
+
+    /* ── Architecture ── */
+    .arch-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.75rem;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .arch-row { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .arch-node {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 9px 16px;
+      border-radius: var(--r);
+      border: 1px solid var(--border-2);
+      text-align: center;
+      min-width: 100px;
+    }
+    .arch-node .nl { font-family: var(--mono); font-size: 11px; font-weight: 500; }
+    .arch-node .ns { font-size: 10px; color: var(--text-3); margin-top: 2px; }
+    .n-web { border-color: rgba(75,158,255,0.35); background: var(--accent-dim); }
+    .n-web .nl { color: var(--accent); }
+    .n-esp { border-color: rgba(34,217,122,0.35); background: var(--green-dim); }
+    .n-esp .nl { color: var(--green); }
+    .n-ai  { border-color: rgba(167,139,250,0.35); background: var(--purple-dim); }
+    .n-ai  .nl { color: var(--purple); }
+    .n-hw  { border-color: rgba(255,112,67,0.35); background: var(--orange-dim); }
+    .n-hw  .nl { color: var(--orange); }
+    .arch-arrow { color: var(--text-3); font-size: 17px; }
+
+    /* ── Code blocks ── */
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .code-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .code-lang { font-size: 10.5px; font-family: var(--mono); color: var(--text-3); }
+    .copy-btn {
+      font-size: 10.5px;
+      color: var(--text-3);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 1px 8px;
+      cursor: pointer;
+      font-family: var(--sans);
+      transition: all 0.13s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+    pre {
+      padding: 1.25rem;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      background: var(--surface-2);
+      color: var(--accent);
+      padding: 1.5px 6px;
+      border-radius: var(--r-sm);
+    }
+    pre code { background: transparent; color: var(--text); padding: 0; font-size: 13px; }
+    .kw  { color: var(--purple); }
+    .str { color: var(--green); }
+    .cm  { color: var(--text-3); font-style: italic; }
+    .fn  { color: var(--accent); }
+    .num { color: var(--orange); }
+    .at  { color: #F97316; }
+
+    /* ── Tables ── */
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      text-align: left;
+      padding: 9px 14px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    tbody td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+      color: var(--text-2);
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(75,158,255,0.03); }
+    td code { font-size: 12px; }
+    kbd {
+      display: inline-block;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--r-sm);
+      padding: 1px 7px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .lib-name { font-family: var(--mono); color: var(--accent); font-size: 12.5px; }
+    .role-pill {
+      display: inline-block;
+      font-size: 10.5px;
+      padding: 2px 8px;
+      border-radius: var(--r-sm);
+      font-family: var(--mono);
+    }
+    .rp-hw  { background: var(--green-dim);  color: var(--green); }
+    .rp-ai  { background: var(--purple-dim); color: var(--purple); }
+    .rp-ui  { background: var(--accent-dim); color: var(--accent); }
+    .rp-3d  { background: var(--orange-dim); color: var(--orange); }
+    .rp-dep { background: rgba(75,158,255,0.06); color: var(--text-3); border: 1px solid var(--border); }
+
+    /* ── Callouts ── */
+    .callout {
+      display: flex;
+      gap: 11px;
+      padding: 11px 14px;
+      border-radius: var(--r);
+      margin: 1rem 0;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+    .callout .ci { flex-shrink: 0; margin-top: 1px; font-size: 15px; }
+    .callout-info    { background: var(--accent-dim); border: 1px solid rgba(75,158,255,0.18); color: var(--text-2); }
+    .callout-warning { background: var(--orange-dim); border: 1px solid rgba(255,112,67,0.18); color: var(--text-2); }
+    .callout-danger  { background: var(--red-dim);    border: 1px solid rgba(255,68,85,0.18);  color: var(--text-2); }
+
+    /* ── File tree ── */
+    .file-tree {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.25rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 2;
+      overflow-x: auto;
+    }
+    .ft-dir { color: var(--accent); }
+    .ft-file { color: var(--text-2); }
+    .ft-cm { color: var(--text-3); }
+
+    /* ── Sequence flow ── */
+    .seq-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0.75rem 0; }
+    .seq-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 5px 12px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-2);
+    }
+    .seq-arrow { color: var(--text-3); font-size: 14px; }
+
+    /* ── Tags ── */
+    .tag {
+      display: inline-block;
+      font-size: 10.5px;
+      padding: 2px 8px;
+      border-radius: var(--r-sm);
+      font-family: var(--mono);
+    }
+    .tg { background: var(--green-dim);  color: var(--green); }
+    .tb { background: var(--accent-dim); color: var(--accent); }
+    .to { background: var(--orange-dim); color: var(--orange); }
+    .tr { background: var(--red-dim);    color: var(--red); }
+    .tp { background: var(--purple-dim); color: var(--purple); }
+
+    /* ── Footer ── */
+    .doc-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1.75rem;
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .doc-footer .fl { font-family: var(--display); font-size: 14px; color: var(--accent); font-weight: 500; letter-spacing: 0.1em; }
+    .doc-footer p { font-size: 11.5px; color: var(--text-3); margin: 4px 0 0; line-height: 1.6; }
+
+    /* ── Responsive ── */
+    @media (max-width: 780px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 2rem 1.25rem 4rem; }
+      h1 { font-size: 26px; }
+      h2 { font-size: 20px; }
+      .card-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">AURA</div>
+    <div class="logo-sub">Autonomous Unified<br>Robotic Arm Controller</div>
+    <div class="sidebar-version">v2.0</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Introduction</div>
+    <a href="#overview"      class="nav-link active">Overview</a>
+    <a href="#features"      class="nav-link">Features</a>
+    <a href="#architecture"  class="nav-link">Architecture</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Getting Started</div>
+    <a href="#prerequisites" class="nav-link">Prerequisites</a>
+    <a href="#hardware"      class="nav-link">Hardware Setup</a>
+    <a href="#connect"       class="nav-link">Connect ESP32</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Control Modes</div>
+    <a href="#dashboard" class="nav-link">Dashboard <span class="nav-badge">tab 1</span></a>
+    <a href="#gesture"   class="nav-link">Gesture Control <span class="nav-badge">tab 2</span></a>
+    <a href="#vision"    class="nav-link">Vision AI <span class="nav-badge">tab 3</span></a>
+    <a href="#face"      class="nav-link">Face Scan <span class="nav-badge">tab 4</span></a>
+    <a href="#terminal"  class="nav-link">AI Terminal <span class="nav-badge">tab 5</span></a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Reference</div>
+    <a href="#shortcuts" class="nav-link">Keyboard Shortcuts</a>
+    <a href="#gamepad"   class="nav-link">Gamepad</a>
+    <a href="#themes"    class="nav-link">Themes</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Developer</div>
+    <a href="#stack"       class="nav-link">Tech Stack</a>
+    <a href="#source"      class="nav-link">Source Code Guide</a>
+    <a href="#troubleshoot" class="nav-link">Troubleshooting</a>
+  </div>
+</nav>
+
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+
+  <!-- Hero -->
+  <div class="hero" id="overview">
+    <div class="hero-chips">
+      <span class="chip esp"><span class="dot"></span>ESP32</span>
+      <span class="chip ai"><span class="dot"></span>MediaPipe</span>
+      <span class="chip ai"><span class="dot"></span>COCO-SSD</span>
+      <span class="chip nlp"><span class="dot"></span>GPT-4o-mini</span>
+      <span class="chip cam"><span class="dot"></span>Three.js</span>
+    </div>
+    <h1><span>AURA</span> Documentation</h1>
+    <p>AURA is a browser-based controller for a 5-axis robotic arm. Drive it with sliders, hand gestures, AI object detection, face tracking, natural language commands, or a gamepad — and watch a 3D twin mirror every move in real time.</p>
+    <div class="hero-cta">
+      <a href="https://aurasoftware.vercel.app/" target="_blank" class="btn btn-primary">↗ Open AURA</a>
+      <a href="#prerequisites" class="btn btn-ghost">Get Started →</a>
+    </div>
+  </div>
+
+
+  <!-- ── FEATURES ── -->
+  <section id="features">
+    <div class="eyebrow">// features</div>
+    <h2>What AURA Can Do</h2>
+    <p>Five independent control modes, a 3D digital twin, AI trajectory optimization, session analytics, and a remote sharing link — all in one browser tab.</p>
+
+    <div class="card-grid">
+      <div class="feat-card">
+        <div class="f-icon" style="background:var(--accent-dim)">🎮</div>
+        <h4>Dashboard</h4>
+        <p>Manual sliders, preset positions, live telemetry, record & replay</p>
+      </div>
+      <div class="feat-card">
+        <div class="f-icon" style="background:var(--green-dim)">✋</div>
+        <h4>Gesture Control</h4>
+        <p>Drive the arm with your hands via Google MediaPipe — no hardware needed</p>
+      </div>
+      <div class="feat-card">
+        <div class="f-icon" style="background:var(--purple-dim)">👁️</div>
+        <h4>Vision AI</h4>
+        <p>COCO-SSD object detection with autonomous pick-and-place sorting</p>
+      </div>
+      <div class="feat-card">
+        <div class="f-icon" style="background:var(--orange-dim)">😶</div>
+        <h4>Face Scan</h4>
+        <p>Control three servos by tilting your head, nodding, and opening your mouth</p>
+      </div>
+      <div class="feat-card">
+        <div class="f-icon" style="background:var(--accent-dim)">💬</div>
+        <h4>AI Terminal</h4>
+        <p>Type natural language commands, processed by GPT-4o-mini into servo actions</p>
+      </div>
+      <div class="feat-card">
+        <div class="f-icon" style="background:var(--purple-dim)">📦</div>
+        <h4>3D Digital Twin</h4>
+        <p>Three.js model mirrors the physical arm's angles in real time</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ── ARCHITECTURE ── -->
+  <section id="architecture">
+    <div class="eyebrow">// architecture</div>
+    <h2>System Architecture</h2>
+    <p>AURA runs entirely in the browser. The web app communicates with the ESP32 over a local WiFi network via HTTP. AI inference (MediaPipe, TensorFlow.js) runs client-side. Only the NLP terminal makes an external call to OpenAI.</p>
+
+    <div class="arch-wrap">
+      <div class="arch-row">
+        <div class="arch-node n-web">
+          <div class="nl">Browser</div>
+          <div class="ns">AURA Web App</div>
+        </div>
+      </div>
+      <div class="arch-row" style="color:var(--text-3); font-size:18px; gap:40px">↙ ↓ ↓ ↓ ↘</div>
+      <div class="arch-row" style="gap:8px">
+        <div class="arch-node n-esp" style="min-width:90px">
+          <div class="nl">ESP32</div>
+          <div class="ns">HTTP server</div>
+        </div>
+        <div class="arch-node n-ai" style="min-width:90px">
+          <div class="nl">MediaPipe</div>
+          <div class="ns">Hand tracking</div>
+        </div>
+        <div class="arch-node n-ai" style="min-width:90px">
+          <div class="nl">COCO-SSD</div>
+          <div class="ns">Object detect</div>
+        </div>
+        <div class="arch-node n-ai" style="min-width:90px">
+          <div class="nl">GPT-4o-mini</div>
+          <div class="ns">NLP commands</div>
+        </div>
+        <div class="arch-node n-ai" style="min-width:90px">
+          <div class="nl">Three.js</div>
+          <div class="ns">3D twin</div>
+        </div>
+      </div>
+      <div style="color:var(--text-3); font-size:18px;">↓</div>
+      <div class="arch-row">
+        <div class="arch-node n-hw" style="min-width:300px">
+          <div class="nl">5× Servo Motors</div>
+          <div class="ns">S1 Base · S2 Shoulder · S3 Elbow · S4 Wrist · S5 Gripper</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ── PREREQUISITES ── -->
+  <section id="prerequisites">
+    <div class="eyebrow">// getting started</div>
+    <h2>Prerequisites</h2>
+
+    <div class="callout callout-info">
+      <span class="ci">ℹ</span>
+      <span>No installation required — AURA runs at <a href="https://aurasoftware.vercel.app/" target="_blank">aurasoftware.vercel.app</a>. The ESP32 connection is optional; the app operates in full simulator mode without it.</span>
+    </div>
+
+    <h3>Hardware</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>ESP32 microcontroller</td><td>With PWM-capable GPIO pins</td></tr>
+          <tr><td>5× Servo motors (S1–S5)</td><td>Standard 180° hobby servos</td></tr>
+          <tr><td>5-axis robotic arm chassis</td><td>Any compatible kit</td></tr>
+          <tr><td>Dedicated servo power supply</td><td>5–6 V, ≥ 2 A recommended</td></tr>
+          <tr><td>WiFi network</td><td>ESP32 and client browser must be on the same LAN</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Browser</h3>
+    <p>Any modern Chromium-based browser (Chrome, Edge, Brave). Camera features require <code>getUserMedia</code> permission. A secure context (HTTPS or <code>localhost</code>) is required for camera access.</p>
+  </section>
+
+
+  <!-- ── HARDWARE SETUP ── -->
+  <section id="hardware">
+    <h2>Hardware Setup</h2>
+    <p>Flash your ESP32 with firmware that exposes an HTTP endpoint for servo control. AURA sends angle commands using the following format:</p>
+
+    <div class="code-block">
+      <div class="code-head">
+        <span class="code-lang">http</span>
+        <button class="copy-btn">copy</button>
+      </div>
+      <pre><code>GET http://&lt;ESP32_IP&gt;/servo?s=<span class="num">1</span>&amp;angle=<span class="num">90</span>
+
+<span class="cm">Parameters</span>
+  s      — servo index  (1 = Base, 2 = Shoulder, 3 = Elbow, 4 = Wrist, 5 = Gripper)
+  angle  — target angle  0–180°</code></pre>
+    </div>
+
+    <p>Wire each servo signal pin to a dedicated PWM GPIO on the ESP32. Wire servo power (V+ and GND) directly from the external power supply — never from the ESP32's onboard rails.</p>
+
+    <div class="callout callout-warning">
+      <span class="ci">⚠</span>
+      <span>Servo motors draw significant current. Powering them from the ESP32's 3.3 V or 5 V pin can brown out the board. Use a separate BEC or bench supply with adequate current capacity.</span>
+    </div>
+  </section>
+
+
+  <!-- ── CONNECT ESP32 ── -->
+  <section id="connect">
+    <h2>Connecting ESP32</h2>
+
+    <div class="mode-block">
+      <div class="mode-head">
+        <span class="mode-tag">Settings → ESP32 Connection</span>
+        <span class="mode-title">First-time setup</span>
+      </div>
+      <div class="mode-body">
+        <ol>
+          <li>Open AURA and navigate to the <strong>Settings</strong> tab (press <kbd>6</kbd> or click the tab)</li>
+          <li>Under <strong>ESP32 IP Address</strong>, enter the local IP of your ESP32 (e.g. <code>192.168.1.42</code>)</li>
+          <li>Click <strong>Connect</strong></li>
+          <li>The status chip in the bottom bar turns green when the connection is live</li>
+        </ol>
+      </div>
+    </div>
+
+    <p>Once connected, all slider, preset, gesture, vision, and terminal commands are forwarded to the physical arm in real time. Disconnecting reverts to simulator mode — the 3D twin continues to respond but no signals are sent to hardware.</p>
+  </section>
+
+  <hr>
+
+  <!-- ── DASHBOARD ── -->
+  <section id="dashboard">
+    <div class="eyebrow">// tab 1</div>
+    <h2>Dashboard — Manual Control</h2>
+
+    <div class="mode-block">
+      <div class="mode-head">
+        <span class="mode-tag">Dashboard</span>
+        <span class="mode-title">Sliders, Presets, Telemetry & Record/Replay</span>
+        <span class="tag tb" style="margin-left:auto">key: 1</span>
+      </div>
+      <div class="mode-body">
+        <p>Full manual control over all five servos with real-time feedback.</p>
+        <ul>
+          <li>Drag a slider or press <kbd>−</kbd> / <kbd>+</kbd> to move a servo in 1° increments</li>
+          <li>Preset buttons: <strong>Home</strong> (rest), <strong>Ready</strong>, <strong>Pick</strong>, <strong>Place</strong></li>
+          <li>Press <strong>Record</strong> to capture a movement sequence, <strong>Stop</strong> to end, <strong>Play</strong> to replay</li>
+          <li>The live telemetry chart logs all five servo angles across the session</li>
+          <li>The 3D digital twin mirrors the arm's current angles in real time</li>
+          <li>The AI Trajectory Optimizer runs in the background and shows speed-boost % after sequences are recorded</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Servo Quick Reference</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Joint</th><th>Range</th><th>Home</th></tr></thead>
+        <tbody>
+          <tr><td><code>S1</code></td><td>Base (rotation)</td><td>0° – 180°</td><td>90°</td></tr>
+          <tr><td><code>S2</code></td><td>Shoulder</td><td>0° – 180°</td><td>135°</td></tr>
+          <tr><td><code>S3</code></td><td>Elbow</td><td>0° – 180°</td><td>0°</td></tr>
+          <tr><td><code>S4</code></td><td>Wrist</td><td>0° – 180°</td><td>90°</td></tr>
+          <tr><td><code>S5</code></td><td>Gripper</td><td>0° – 180°</td><td>60°</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ── GESTURE ── -->
+  <section id="gesture">
+    <div class="eyebrow">// tab 2</div>
+    <h2>Gesture Control</h2>
+
+    <div class="mode-block">
+      <div class="mode-head">
+        <span class="mode-tag">Gesture</span>
+        <span class="mode-title">Hand Tracking via Google MediaPipe</span>
+        <span class="tag tg" style="margin-left:auto">key: 2</span>
+      </div>
+      <div class="mode-body">
+        <p>Your webcam feed is processed entirely in the browser by MediaPipe. No server, no special hardware required.</p>
+        <ul>
+          <li>Right hand X position → <strong>S1 Base</strong> left/right</li>
+          <li>Right hand depth (Z) → <strong>S2 Shoulder</strong> angle</li>
+          <li>Right hand Y position → <strong>S3 Elbow</strong> up/down</li>
+          <li>Left hand Y position → <strong>S4 Wrist</strong> rotation</li>
+          <li>Thumb–index pinch (right hand) → <strong>S5 Gripper</strong> open/close</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <span class="ci">ℹ</span>
+      <span>Click <strong>Calibrate</strong> before starting gesture mode to set your neutral hand position. Good, even lighting and a plain background behind your hands improve tracking accuracy significantly.</span>
+    </div>
+  </section>
+
+
+  <!-- ── VISION ── -->
+  <section id="vision">
+    <div class="eyebrow">// tab 3</div>
+    <h2>Vision AI — Autonomous Object Sorter</h2>
+
+    <div class="mode-block">
+      <div class="mode-head">
+        <span class="mode-tag">Vision</span>
+        <span class="mode-title">TensorFlow COCO-SSD Detection + Autopilot</span>
+        <span class="tag tp" style="margin-left:auto">key: 3</span>
+      </div>
+      <div class="mode-body">
+        <p>COCO-SSD detects objects in the camera feed and instructs the arm to pick them up and deposit them into one of three bins.</p>
+        <ul>
+          <li>Enter target classes (e.g. <code>bottle, cup, apple</code>) and set minimum confidence (default 55%)</li>
+          <li>Configure three drop zones: <strong>Bin A</strong> (Left, 145°), <strong>Bin B</strong> (Center, 90°), <strong>Bin C</strong> (Right, 35°)</li>
+          <li>Enable <strong>Fully Autonomous</strong> to auto-trigger pick-and-place on each detection</li>
+          <li>Enable <strong>Auto-Loop</strong> to continuously sort and cycle bins A → B → C</li>
+          <li>Human detection is a safety interlock — autopilot halts immediately if a person is detected in frame</li>
+          <li>Focus Zone controls how much of the frame the detector considers as the valid pickup area</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Autopilot Pick-and-Place Sequence</h3>
+    <div class="seq-flow">
+      <span class="seq-step">① Align Base</span>
+      <span class="seq-arrow">→</span>
+      <span class="seq-step">② Approach</span>
+      <span class="seq-arrow">→</span>
+      <span class="seq-step">③ Grip</span>
+      <span class="seq-arrow">→</span>
+      <span class="seq-step">④ Lift</span>
+      <span class="seq-arrow">→</span>
+      <span class="seq-step">⑤ Deliver</span>
+      <span class="seq-arrow">→</span>
+      <span class="seq-step">⑥ Release</span>
+      <span class="seq-arrow">→</span>
+      <span class="seq-step">⑦ Home</span>
+    </div>
+  </section>
+
+
+  <!-- ── FACE SCAN ── -->
+  <section id="face">
+    <div class="eyebrow">// tab 4</div>
+    <h2>Face Scan</h2>
+
+    <div class="mode-block">
+      <div class="mode-head">
+        <span class="mode-tag">Face Scan</span>
+        <span class="mode-title">Head Pose → Servo Mapping</span>
+        <span class="tag to" style="margin-left:auto">key: 4</span>
+      </div>
+      <div class="mode-body">
+        <p>Facial landmarks are used to map head pose directly to servo positions. Only three servos are mapped in this mode.</p>
+        <ul>
+          <li>Tilt head left / right → <strong>S1 Base</strong> rotation</li>
+          <li>Nod head up / down → <strong>S3 Elbow</strong> angle</li>
+          <li>Open / close mouth → <strong>S5 Gripper</strong> open/close</li>
+        </ul>
+        <p>Click <strong>Calibrate</strong> with your head in a neutral, forward-facing position before controlling the arm.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── AI TERMINAL ── -->
+  <section id="terminal">
+    <div class="eyebrow">// tab 5</div>
+    <h2>AI Command Terminal</h2>
+
+    <div class="mode-block">
+      <div class="mode-head">
+        <span class="mode-tag">Terminal</span>
+        <span class="mode-title">Natural Language Control via GPT-4o-mini</span>
+        <span class="tag tb" style="margin-left:auto">key: 5</span>
+      </div>
+      <div class="mode-body">
+        <p>Type any plain-English instruction. GPT-4o-mini interprets it and executes the matching servo command sequence.</p>
+        <ul>
+          <li><code>"pick up the object"</code> → full pick sequence</li>
+          <li><code>"move left"</code> → rotates S1 Base counterclockwise</li>
+          <li><code>"go to ready position"</code> → Ready preset</li>
+          <li><code>"grab and place in bin A"</code> → pick-and-place to Bin A (145°)</li>
+          <li><code>"open gripper"</code> → S5 to maximum open</li>
+          <li><code>"elbow up"</code> → increments S3</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-warning">
+      <span class="ci">⚠</span>
+      <span>The terminal requires an OpenAI API key, entered in <strong>Settings → Terminal</strong>. Each command makes an API call billed to your OpenAI account. Commands that may conflict with the current safety state (e.g. commanding movement while E-Stop is active) are rejected.</span>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ── KEYBOARD SHORTCUTS ── -->
+  <section id="shortcuts">
+    <div class="eyebrow">// reference</div>
+    <h2>Keyboard Shortcuts</h2>
+    <p>Press <kbd>?</kbd> anywhere in the app to open the shortcuts overlay. All shortcuts are global and work across tabs.</p>
+
+    <h3>Arm Movement</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Key(s)</th><th>Action</th><th>Servo</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>A</kbd> / <kbd>D</kbd></td><td>Base left / right</td><td>S1</td></tr>
+          <tr><td><kbd>W</kbd> / <kbd>S</kbd></td><td>Shoulder up / down</td><td>S2</td></tr>
+          <tr><td><kbd>Q</kbd> / <kbd>E</kbd></td><td>Elbow up / down</td><td>S3</td></tr>
+          <tr><td><kbd>R</kbd> / <kbd>F</kbd></td><td>Wrist up / down</td><td>S4</td></tr>
+          <tr><td><kbd>Z</kbd> / <kbd>X</kbd></td><td>Gripper open / close</td><td>S5</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>System</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Key</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Space</kbd></td><td>Move to Home position</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Emergency Stop — detaches all servos immediately</td></tr>
+          <tr><td><kbd>1</kbd> – <kbd>5</kbd></td><td>Switch to tab 1–5</td></tr>
+          <tr><td><kbd>?</kbd></td><td>Show / hide shortcuts overlay</td></tr>
+          <tr><td><kbd>T</kbd></td><td>Cycle theme (Cyber → Solar → Matrix)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-danger">
+      <span class="ci">🛑</span>
+      <span><strong>Emergency Stop:</strong> <kbd>Esc</kbd> immediately detaches all servos and disables torque — the arm goes limp. Press the on-screen <strong>Reset Emergency Stop</strong> button to re-enable control. The E-Stop state persists across tab switches.</span>
+    </div>
+  </section>
+
+
+  <!-- ── GAMEPAD ── -->
+  <section id="gamepad">
+    <h2>Gamepad Control</h2>
+    <p>Connect an Xbox or PlayStation controller via USB or Bluetooth. AURA detects it automatically using the browser Gamepad API — no configuration needed.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Input</th><th>Servo / Action</th></tr></thead>
+        <tbody>
+          <tr><td>Left Stick — X axis</td><td>S1 Base rotation</td></tr>
+          <tr><td>Left Stick — Y axis</td><td>S2 Shoulder</td></tr>
+          <tr><td>Right Stick — X axis</td><td>S3 Elbow</td></tr>
+          <tr><td>Right Stick — Y axis</td><td>S4 Wrist</td></tr>
+          <tr><td>Left Trigger (LT / L2)</td><td>S5 Gripper close</td></tr>
+          <tr><td>Right Trigger (RT / R2)</td><td>S5 Gripper open</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ── THEMES ── -->
+  <section id="themes">
+    <h2>Appearance Themes</h2>
+    <p>Change theme from <strong>Settings → Appearance</strong>, or press <kbd>T</kbd> to cycle through all three.</p>
+
+    <div class="card-grid">
+      <div class="feat-card" style="border-color: rgba(75,158,255,0.25)">
+        <div class="f-icon" style="background:var(--accent-dim)">🌌</div>
+        <h4>Cyber</h4>
+        <p>Deep space dark with electric-blue accents. Default theme.</p>
+      </div>
+      <div class="feat-card" style="border-color: rgba(255,180,0,0.2)">
+        <div class="f-icon" style="background:rgba(255,200,50,0.1)">☀️</div>
+        <h4>Solar</h4>
+        <p>Bright light mode with warm amber highlights.</p>
+      </div>
+      <div class="feat-card" style="border-color: rgba(34,217,122,0.25)">
+        <div class="f-icon" style="background:var(--green-dim)">🟢</div>
+        <h4>Matrix</h4>
+        <p>Dark background with phosphor-green terminal aesthetic.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ── TECH STACK ── -->
+  <section id="stack">
+    <div class="eyebrow">// developer</div>
+    <h2>Tech Stack</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Library / Tool</th><th>Role</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lib-name">ESP32</td>
+            <td><span class="role-pill rp-hw">hardware</span></td>
+            <td>Microcontroller; runs an HTTP server and drives servos via PWM</td>
+          </tr>
+          <tr>
+            <td class="lib-name">Google MediaPipe</td>
+            <td><span class="role-pill rp-ai">AI</span></td>
+            <td>Client-side hand landmark detection for gesture control</td>
+          </tr>
+          <tr>
+            <td class="lib-name">TensorFlow COCO-SSD</td>
+            <td><span class="role-pill rp-ai">AI</span></td>
+            <td>Object detection model for Vision tab; runs fully in the browser</td>
+          </tr>
+          <tr>
+            <td class="lib-name">TensorFlow.js</td>
+            <td><span class="role-pill rp-ai">AI</span></td>
+            <td>AI trajectory optimizer, trained on 10,000 recorded trajectory samples</td>
+          </tr>
+          <tr>
+            <td class="lib-name">OpenAI GPT-4o-mini</td>
+            <td><span class="role-pill rp-ai">AI</span></td>
+            <td>Parses natural language commands into structured servo instructions</td>
+          </tr>
+          <tr>
+            <td class="lib-name">Three.js</td>
+            <td><span class="role-pill rp-3d">3D</span></td>
+            <td>Real-time 3D digital twin — renders the arm's pose every update cycle</td>
+          </tr>
+          <tr>
+            <td class="lib-name">Web Gamepad API</td>
+            <td><span class="role-pill rp-ui">browser</span></td>
+            <td>Controller input detection, axis polling, and servo mapping</td>
+          </tr>
+          <tr>
+            <td class="lib-name">Vercel</td>
+            <td><span class="role-pill rp-dep">deploy</span></td>
+            <td>Global CDN hosting for the web interface</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ── SOURCE CODE ── -->
+  <section id="source">
+    <h2>Source Code Guide</h2>
+    <p>AURA is a single-page application. Each control mode lives in its own JavaScript module. All modules share a central servo state object and call the same dispatch function.</p>
+
+    <div class="file-tree">
+      <div><span class="ft-dir">aura/</span></div>
+      <div>&nbsp;&nbsp;<span class="ft-file">index.html</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— entry point; loads all tabs and bootstraps the app</span></div>
+      <div>&nbsp;&nbsp;<span class="ft-dir">css/</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">style.css</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— global layout, tokens, theme classes (cyber / solar / matrix)</span></div>
+      <div>&nbsp;&nbsp;<span class="ft-dir">js/</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">servo.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— servo state, angle clamping, HTTP dispatch to ESP32</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">dashboard.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— slider controls, preset buttons, record/replay engine</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">gesture.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— MediaPipe hand tracking loop, gesture→servo mapping</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">vision.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— COCO-SSD inference loop, autopilot state machine</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">face.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— facial landmark detection, head-pose→servo mapping</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">terminal.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— GPT-4o-mini API calls, response→action parser</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">twin.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— Three.js scene, arm model, per-frame angle update</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">optimizer.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— ML trajectory model, speed-boost analysis, analytics</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">settings.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— ESP32 config, camera device select, theme toggle</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">keyboard.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— global keydown handler, shortcut dispatch table</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">gamepad.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— Gamepad API polling loop, axis→servo mapping</span></div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-file">telemetry.js</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-cm">— live chart, session stats, command counter</span></div>
+    </div>
+
+    <h3>Sending a Servo Command</h3>
+    <p>Every control mode calls the same central dispatch function in <code>servo.js</code>:</p>
+
+    <div class="code-block">
+      <div class="code-head">
+        <span class="code-lang">javascript — servo.js</span>
+        <button class="copy-btn">copy</button>
+      </div>
+      <pre><code><span class="cm">// Central servo dispatch — called by all control modes</span>
+<span class="kw">async function</span> <span class="fn">setServo</span>(index, angle) {
+  angle = Math.<span class="fn">max</span>(<span class="num">0</span>, Math.<span class="fn">min</span>(<span class="num">180</span>, Math.<span class="fn">round</span>(angle)));
+
+  servoState[index] = angle;        <span class="cm">// update shared state</span>
+  <span class="fn">update3DTwin</span>(index, angle);        <span class="cm">// sync Three.js model</span>
+  <span class="fn">updateTelemetry</span>(index, angle);     <span class="cm">// log to chart</span>
+  <span class="fn">updateSlider</span>(index, angle);        <span class="cm">// reflect in dashboard UI</span>
+
+  <span class="kw">if</span> (eStopActive) <span class="kw">return</span>;           <span class="cm">// hard block during E-Stop</span>
+
+  <span class="kw">if</span> (esp32Connected) {
+    <span class="kw">await</span> <span class="fn">fetch</span>(
+      <span class="str">`http://${esp32IP}/servo?s=${index}&angle=${angle}`</span>
+    );
+  }
+}</code></pre>
+    </div>
+
+    <h3>Theming</h3>
+    <p>Themes are CSS custom-property overrides applied by toggling a class on <code>&lt;body&gt;</code>. Adding a new theme means adding one rule block:</p>
+
+    <div class="code-block">
+      <div class="code-head">
+        <span class="code-lang">css — style.css</span>
+        <button class="copy-btn">copy</button>
+      </div>
+      <pre><code><span class="cm">/* Cyber (default) — set on :root */</span>
+<span class="at">:root</span> {
+  <span class="at">--primary</span>:  <span class="str">#4B9EFF</span>;
+  <span class="at">--bg</span>:       <span class="str">#0B0D14</span>;
+  <span class="at">--surface</span>:  <span class="str">#131923</span>;
+}
+
+<span class="cm">/* Matrix */</span>
+<span class="at">body.matrix</span> {
+  <span class="at">--primary</span>:  <span class="str">#00FF41</span>;
+  <span class="at">--bg</span>:       <span class="str">#0D0D0D</span>;
+  <span class="at">--surface</span>:  <span class="str">#111111</span>;
+}
+
+<span class="cm">/* Solar */</span>
+<span class="at">body.solar</span> {
+  <span class="at">--primary</span>:  <span class="str">#F59E0B</span>;
+  <span class="at">--bg</span>:       <span class="str">#FAFAF8</span>;
+  <span class="at">--surface</span>:  <span class="str">#FFFFFF</span>;
+  <span class="at">--text</span>:     <span class="str">#111827</span>;
+}</code></pre>
+    </div>
+
+    <h3>Share / Remote Access</h3>
+    <p>The Settings tab exposes a shareable link. Anyone with the link and network access to the same ESP32 can control the arm remotely — useful for demos and collaborative testing. The link encodes the ESP32 IP and session token as URL parameters.</p>
+  </section>
+
+  <hr>
+
+  <!-- ── TROUBLESHOOTING ── -->
+  <section id="troubleshoot">
+    <h2>Troubleshooting</h2>
+
+    <div class="mode-block" style="margin-bottom:10px">
+      <div class="mode-head">
+        <span class="mode-tag">Issue</span>
+        <span class="mode-title">ESP32 won't connect</span>
+      </div>
+      <div class="mode-body">
+        <ul>
+          <li>Confirm your ESP32 and browser are on the same WiFi network (same SSID/LAN)</li>
+          <li>Find the correct IP via the Arduino Serial Monitor or your router's DHCP table</li>
+          <li>AURA is served over HTTPS; browsers block mixed-content HTTP requests by default. Either access AURA over plain HTTP or configure your ESP32 with SSL (unusual for local dev)</li>
+          <li>Try <code>ping &lt;esp32_ip&gt;</code> from the same machine to confirm reachability</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mode-block" style="margin-bottom:10px">
+      <div class="mode-head">
+        <span class="mode-tag">Issue</span>
+        <span class="mode-title">Camera permission denied</span>
+      </div>
+      <div class="mode-body">
+        <ul>
+          <li>Allow camera access when the browser prompts you on first load</li>
+          <li>In Chrome, go to <code>chrome://settings/content/camera</code> and allow <code>aurasoftware.vercel.app</code></li>
+          <li>Camera access is only granted in secure contexts — HTTPS or <code>localhost</code></li>
+          <li>If using a VM or remote desktop, ensure the virtual camera is passed through</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mode-block" style="margin-bottom:10px">
+      <div class="mode-head">
+        <span class="mode-tag">Issue</span>
+        <span class="mode-title">Arm moves erratically / jitters</span>
+      </div>
+      <div class="mode-body">
+        <ul>
+          <li>Check power supply. Servos drawing too much current cause voltage drops.</li>
+          <li>Ensure common ground between ESP32 and external power supply.</li>
+          <li>In Gesture mode, ensure your hand is clearly visible and lighting is good.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
