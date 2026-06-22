@@ -35,25 +35,25 @@ const teamData = [
     id: "aviyansh",
     name: "Aviyansh Jain",
     role: "Lead Mechanical Designer",
-    image: "/avatar-placeholder.png",
-    shortBio: "Bio coming soon...",
-    fullBio: "Full biography coming soon. This section will highlight the detailed background and technical journey of this team member.",
+    image: "https://ik.imagekit.io/CMshree/Gemini_Generated_Image_f1vrr9f1vrr9f1vr.png",
+    shortBio: "Student at Dr. BR Ambedkar CM Shri School Sector 11 Rohini",
+    fullBio: "I am a 15-year-old Lead Mechanical Designer at Team Ramanujan, which basically means I handle everything related to the physical build and strength of our robots. My day-to-day work is all about turning ideas into real, physical hardware by designing intricate 3D linkages and running deep structural analysis. By stress-testing our designs and fixing weak points before they ever go to production, I make sure our machinery can handle tough real-world workloads without breaking down.",
     contributions: ["Designed 3D linkages", "Structural analysis"],
     portfolio: "#",
-    linkedin: "#",
-    github: "#"
+    linkedin: "https://www.linkedin.com/in/aviyansh-ix-b-075831418/",
+    github: "https://github.com/AviyanshJain"
   },
   {
     id: "zeenat",
     name: "Zeenat Khan",
     role: "Research & AI Specialist",
     image: "https://ik.imagekit.io/CMshree/Gemini_Generated_Image_tcep04tcep04tcep%20(1).png?updatedAt=1782043573030",
-    shortBio: "Bio coming soon...",
-    fullBio: "Full biography coming soon. This section will highlight the detailed background and technical journey of this team member.",
+    shortBio: "Student at Dr. BR Ambedkar CM Shri School Madanpur Khadar",
+    fullBio: "As a 14-year-old Research & AI Specialist at Team Ramanujan, I head our computer vision architecture and technical data logic. My work focuses on bridging the gap between theoretical AI models and physical hardware execution. By developing high-performance visual pipelines, I establish the core perception frameworks that allow our autonomous machinery to see, process data, and intelligently navigate its surroundings. Additionally, I lead our research documentation and technical blueprints, ensuring the team's engineering workflows are meticulously structured and optimized for field deployment.",
     contributions: ["Research Documents", "Computer Vision"],
     portfolio: "#",
-    linkedin: "#",
-    github: "#"
+    linkedin: "https://www.linkedin.com/in/zeenat-khan-146a36418",
+    github: "https://github.com/zeenatkhan15"
   },
   {
     id: "tanishq",
@@ -61,7 +61,7 @@ const teamData = [
     role: "Lead Full-Stack & Firmware Architect",
     image: "https://ik.imagekit.io/CMshree/Gemini_Generated_Image_p7yccxp7yccxp7yc%20(1).png?updatedAt=1782043489674",
     shortBio: "Student at Dr. BR Ambedkar CM Shri sec 23 rohini.",
-    fullBio: "Full biography coming soon. This section will highlight the detailed background and technical journey of this team member.",
+    fullBio: "I am a 15-year-old Lead Full-Stack & Firmware Architect at Team Ramanujan, responsible for engineering our end-to-end software ecosystem and low-level hardware control layers. My work centers on building the digital pipelines that translate complex user-facing software into direct, physical machine movements. From writing optimized microcontroller code to designing scalable web interfaces, I establish the foundational infrastructure that allows our robotics to receive data instantly, maintain low-latency communication, and execute precise physical operations.",
     contributions: ["Software Design", "Firmware Design"],
     portfolio: "#",
     linkedin: "#",
@@ -72,12 +72,12 @@ const teamData = [
     name: "Ishant Dhir",
     role: "Hardware Tech & Automation",
     image: "https://ik.imagekit.io/CMshree/Gemini_Generated_Image_nsrtndnsrtndnsrt%20(1).png?updatedAt=1782043411082",
-    shortBio: "Bio coming soon...",
-    fullBio: "Full biography coming soon. This section will highlight the detailed background and technical journey of this team member.",
+    shortBio: "Student at Dr. BR Ambedkar CM Shri School Yamuna Vihar",
+    fullBio: "As a 13-year-old Hardware Tech & Automation specialist for Team Ramanujan, I am responsible for making sure our physical setups run perfectly and never fail in the field. I spend most of my time focused on quality assurance and performance tuning, finding ways to make our hardware faster and more reliable. Through constant testing, calibration, and fine-tuning, I push our industrial components to their absolute limits so the entire automation system operates smoothly and safely.",
     contributions: ["Quality assurance", "Performance tuning"],
     portfolio: "#",
-    linkedin: "#",
-    github: "#"
+    linkedin: "https://www.linkedin.com/in/ishant-dheer-025871418/",
+    github: "https://github.com/avneeshkumar1303-source"
   }
 ];
 
