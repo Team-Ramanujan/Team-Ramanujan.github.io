@@ -1,6 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+
+function Counter({ value, duration = 2 }: { value: number; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(0);
+  const rounded = useTransform(motionValue, (latest) => Math.round(latest));
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(motionValue, value, { duration: duration, ease: "easeOut" });
+      return controls.stop;
+    }
+  }, [isInView, motionValue, value, duration]);
+
+  useEffect(() => {
+    return rounded.on("change", (latest) => {
+      if (ref.current) {
+        ref.current.textContent = latest.toLocaleString();
+      }
+    });
+  }, [rounded]);
+
+  return <span ref={ref}>0</span>;
+}
 
 export default function HeroSection() {
   return (
@@ -14,9 +39,9 @@ export default function HeroSection() {
             scale: { duration: 0.8, ease: "easeOut" },
             y: { repeat: Infinity, duration: 6, ease: "easeInOut" }
           }}
-          className="w-32 h-32 md:w-48 md:h-48 max-md:w-24 max-md:h-24 mx-auto bg-white shadow-2xl flex items-center justify-center rounded-full mb-12 max-md:mb-8 overflow-hidden"
+          className="w-32 h-32 md:w-48 md:h-48 max-md:w-24 max-md:h-24 mx-auto mb-12 max-md:mb-8"
         >
-          <img src="/logo.jpeg" alt="Team Ramanujan Logo" className="w-full h-full object-cover" />
+          <img src="/logo.png" alt="Team Ramanujan Logo" className="w-full h-full object-contain" />
         </motion.div>
 
         <motion.p
@@ -79,10 +104,37 @@ export default function HeroSection() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
-            src="https://ik.imagekit.io/CMshree/Gemini_Generated_Image_5uj56f5uj56f5uj5.png"
+            src="https://cdn.savedly.net/6f3fsrfs"
             alt="Team Ramanujan Final Prototype"
             className="w-full h-full object-cover"
           />
+        </motion.div>
+
+        {/* Animated Stats Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-24 max-md:mt-16 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 max-md:gap-y-8 text-center border-t border-b border-gray-200/80 py-12 max-md:py-8"
+        >
+          {[
+            { value: 18, prefix: "", suffix: "", label: "Days of Development" },
+            { value: 5, prefix: "", suffix: "-Axis", label: "Spatial Freedom" },
+            { value: 500, prefix: "", suffix: "g", label: "Payload Capacity" },
+            { value: 2, prefix: "±", suffix: "mm", label: "Iterative Accuracy" }
+          ].map((stat, idx) => (
+            <div key={idx} className="flex flex-col items-center">
+              <span className="text-4xl md:text-5xl font-black text-[#1A1A1A] flex items-center justify-center font-mono">
+                {stat.prefix}
+                <Counter value={stat.value} />
+                {stat.suffix}
+              </span>
+              <span className="text-xs uppercase font-bold text-gray-500 tracking-wider mt-2">
+                {stat.label}
+              </span>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

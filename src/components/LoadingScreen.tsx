@@ -42,9 +42,9 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.1 }}
                 transition={{ duration: 0.8 }}
-                className="w-48 h-48 max-md:w-32 max-md:h-32 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-[0_0_50px_rgba(244,196,48,0.2)]"
+                className="w-48 h-48 max-md:w-32 max-md:h-32 flex items-center justify-center overflow-hidden"
               >
-                <img src="/logo.jpeg" alt="Team Ramanujan Logo" className="w-full h-full object-cover" />
+                <img src="/logo.png" alt="Team Ramanujan Logo" className="w-full h-full object-contain" />
               </motion.div>
             )}
 

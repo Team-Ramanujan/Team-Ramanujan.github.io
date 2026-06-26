@@ -45,7 +45,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-6 max-md:px-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <img src="/logo.jpeg" alt="Team Ramanujan Logo" className="w-10 h-10 object-contain rounded-sm" />
+          <img src="/logo.png" alt="Team Ramanujan Logo" className="w-10 h-10 object-contain rounded-sm" />
           <span className="font-black text-[#1A1A1A] text-xl tracking-tight hidden sm:block">Team Ramanujan</span>
         </div>
         <div className="hidden lg:flex gap-8 items-center">

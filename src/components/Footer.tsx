@@ -188,18 +188,55 @@ export default function Footer() {
         </motion.div>
 
         {/* Closing Line */}
-        <div className="text-center text-gray-500 space-y-4 pt-16 border-t border-gray-200">
-          <div className="w-16 h-16 mx-auto flex items-center justify-center mb-8 rounded-lg overflow-hidden border border-gray-200 shadow-md">
-            <img src="/logo.jpeg" alt="Team Ramanujan Logo" className="w-full h-full object-cover" />
+        <div className="pt-16 border-t border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
+            {/* Left Column: Team Ramanujan Info */}
+            <div className="md:col-span-1 flex flex-col items-center md:items-start gap-4">
+              <div className="w-14 h-14 overflow-hidden">
+                <img src="/logo.png" alt="Team Ramanujan Logo" className="w-full h-full object-contain" />
+              </div>
+              <div>
+                <p className="text-sm font-black tracking-widest uppercase text-[#1A1A1A] leading-snug">
+                  Inspired by Ramanujan.
+                </p>
+                <p className="text-xs text-gray-500 tracking-wider mt-1">
+                  Built by Team Ramanujan. Engineered for the Future.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column: Supported By Logos */}
+            <div className="md:col-span-2 flex flex-col items-center md:items-end gap-4">
+              <p className="text-[10px] font-bold tracking-widest uppercase text-gray-400">
+                Supported & Facilitated By
+              </p>
+              <div className="flex flex-wrap items-center justify-center md:justify-end gap-8 md:gap-10">
+                {[
+                  { src: "/logo-1.png", alt: "LTM" },
+                  { src: "/logo-2.png", alt: "Central Square Foundation" },
+                  { src: "/logo-3.png", alt: "The Innovation Story" },
+                  { src: "/logo-4.png", alt: "CM Shri School" }
+                ].map((logo, idx) => (
+                  <div 
+                    key={idx} 
+                    className="h-10 md:h-12 flex items-center justify-center transition-all duration-300 transform hover:scale-105"
+                  >
+                    <img 
+                      src={logo.src} 
+                      alt={logo.alt} 
+                      className="max-h-full max-w-[120px] md:max-w-[140px] object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <p className="text-sm font-bold tracking-widest uppercase text-[#1A1A1A] leading-loose">
-            Inspired by Ramanujan.<br />
-            Built by Team Ramanujan.<br />
-            Engineered for the Future.
-          </p>
-          <p className="text-xs tracking-widest mt-8 opacity-60">
-            &copy; 2026 Team Ramanujan. All rights reserved.
-          </p>
+
+          <div className="text-center mt-16 pt-8 border-t border-gray-100">
+            <p className="text-xs tracking-widest text-gray-400">
+              &copy; 2026 Team Ramanujan. All rights reserved.
+            </p>
+          </div>
         </div>
         
       </div>

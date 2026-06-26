@@ -110,9 +110,9 @@ export default function TeamSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="w-20 h-20 mx-auto shadow-sm flex items-center justify-center rounded-sm mb-6 overflow-hidden bg-white/5 border border-white/10"
+            className="w-20 h-20 mx-auto mb-6 overflow-hidden"
           >
-            <img src="/logo.jpeg" alt="Team Ramanujan Logo" className="w-full h-full object-cover" />
+            <img src="/logo.png" alt="Team Ramanujan Logo" className="w-full h-full object-contain" />
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
